@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Purchase History</title>
+</head>
+<body>
+<br>
+	<form action="#" th:action="@{/purchase}"
+		th:object="${cartForm}" method="post">
+		<table>
+			<tr th:each = "purchase : ${list}">
+				<td th:text = "${purchase.menu.speed} + '秒かかり'"></td>
+				<td th:text = "${purchase.menu.price} + '円の'"></td>
+				<td th:text = "${purchase.menu.cooking} + 'を注文しました。'"></td>
+			</tr>
+		</table>
+		<span>▼合計</span>
+		<br>
+		<span>購入金額：</span>
+		<span class="totalPrice" th:text="${totalPrice}"></span>
+		<span>円</span>
+		<br>
+		<span>滞在時間：</span>
+		<span class="totalSpeed" th:text="${totalSpeed}"></span>
+		<span>秒</span>
+		<br>
+		<input type='submit' value='履歴を削除' class='submit'>
+		<input type="button" onclick="location.href='/menu'"value="戻る">
+	</form>
+</body>
+</html>

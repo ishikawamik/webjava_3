@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Menu List</title>
+</head>
+<body>
+	<!-- メニュー一覧から選択してもらう -->
+	<p>以下からご選択ください。</p>
+	<form action="#" th:action="@{/menu}"
+	th:object="${menuForm}" method="post">
+	<div>年齢は</div>
+	<input type="hidden" name="itemId" value= "hidden" />
+	<input type = "radio" name = "costomer"
+		th:value = "${youngerName}"
+		th:field="*{selectedCostomer}"
+		th:text = "${youngerName}">
+	<input type = "radio" name = "costomer"
+		th:value = "${elderName}" th:field="*{selectedCostomer}"
+		th:text = "${elderName}">
+	<br>
+	<div>ご希望のシェフは</div>
+	<input type = "radio" name = "chef"
+		th:value = "${cockName}" th:field="*{selectedChef}"
+		th:text = "${cockName}">
+	<input type = "radio" name = "chef"
+		th:value = "${itamaeName}" th:field="*{selectedChef}"
+		th:text = "${itamaeName}">
+	<br>
+	<div>使用する食材は　
+	<span th:if = "${purchaseNum >= 3}">
+		<input type="button" onclick="location.href='/food'"value="リクエストする">
+	</span>
+	</div>
+
+	<!-- 3回以上購入すると食材を増やせるDB画面に遷移できる -->
+	<input type = "radio" th:each="item, stat : ${items}" name = "foodDB"
+		th:text = "${item.itemName}" th:value = "${item.itemId}"
+		th:field="*{selectedFoodDB}"/>
+	<br>
+	<br>
+	<input type='submit' value='注文' class='submit'>
+
+	<!-- 購入履歴をみる -->
+	<input type="button" onclick="location.href='/purchase'" value="おあいそ">
+	</form>
+	<br>
+	<p th:if = "${purchaseNum >= 1}">
+		<span class="purchaseNum"
+			th:text="${purchaseNum} + '回目のご注文ありがとうございます。'"></span>
+	</p>
+	<!-- 注文ボタンを押下すると、
+		 選択したものに合わせたメッセージが表示される -->
+<span class="message" th:text="${message}"></span>
+</body>
+</html>
