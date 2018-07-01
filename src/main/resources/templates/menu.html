@@ -12,12 +12,18 @@
 	<div>年齢は</div>
 	<input type="hidden" name="itemId" value= "hidden" />
 	<input type = "radio" name = "costomer"
+		th:each = "costomer : ${costmerList}"
+		th:value = "${costomer.name}"
+		th:text = "${costomer.name}">
+	<!--
+	<input type = "radio" name = "costomer"
 		th:value = "${youngerName}"
 		th:field="*{selectedCostomer}"
 		th:text = "${youngerName}">
 	<input type = "radio" name = "costomer"
 		th:value = "${elderName}" th:field="*{selectedCostomer}"
 		th:text = "${elderName}">
+	-->
 	<br>
 	<div>ご希望のシェフは</div>
 	<input type = "radio" name = "chef"
@@ -28,14 +34,13 @@
 		th:text = "${itamaeName}">
 	<br>
 	<div>使用する食材は　
+	<!-- 3回以上購入すると食材を増やせるDB画面に遷移できる -->
 	<span th:if = "${purchaseNum >= 3}">
 		<input type="button" onclick="location.href='/food'"value="リクエストする">
 	</span>
 	</div>
-
-	<!-- 3回以上購入すると食材を増やせるDB画面に遷移できる -->
-	<input type = "radio" th:each="item, stat : ${items}" name = "foodDB"
-		th:text = "${item.itemName}" th:value = "${item.itemId}"
+	<input type = "radio" th:each="food, stat : ${foods}" name = "foodDB"
+		th:text = "${food.itemName}" th:value = "${food.itemId}"
 		th:field="*{selectedFoodDB}"/>
 	<br>
 	<br>
