@@ -4,14 +4,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import jp.co.systena.tigerscase.model.service.Cart;
 
-
 public class BaseController {
   @Autowired
   private HttpSession session;
 
   private final String KEY_SESSION_MESSAGE   = "message";
   private final String KEY_SESSION_FOODPRICE = "foodprice";
-  private final String KEY_SESSION_CART    = "cart";
+  private final String KEY_SESSION_CART      = "cart";
 
   protected String getMessageFromSession() {
     return (String) session.getAttribute(KEY_SESSION_MESSAGE);

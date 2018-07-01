@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import jp.co.systena.tigerscase.model.form.ItemListForm;
+import jp.co.systena.tigerscase.model.form.FoodListForm;
 
 @Service
 public class FoodService {
@@ -21,16 +21,16 @@ public class FoodService {
    *
    * @return
    */
-  public List<Item> getItemList() {
+  public List<Food> getFoodList() {
 
     //SELECTを使用してテーブルの情報をすべて取得する
-    List<Item> list = jdbcTemplate.query("SELECT * FROM items ORDER BY item_id", new BeanPropertyRowMapper<Item>(Item.class));
+    List<Food> list = jdbcTemplate.query("SELECT * FROM items ORDER BY item_id", new BeanPropertyRowMapper<Food>(Food.class));
 
     return list;
   }
 
   //itemIDをキーに商品名を取り出す
-  public String getSelectItemName(String itemId) {
+  public String getSelectFoodName(String itemId) {
 
     List<Map<String, Object>> list = jdbcTemplate.queryForList("SELECT * FROM items WHERE item_id = ?",
         Integer.parseInt(itemId));
@@ -66,31 +66,31 @@ public class FoodService {
    * @return
    */
 
-  public Model update(ItemListForm listForm,
+  public Model update(FoodListForm listForm,
                         BindingResult result,
                         Model model) {
 
     // listFormに画面で入力したデータが入っているので取得する
-    List<Item> itemList = listForm.getItemList();
+    List<Food> foodList = listForm.getFoodList();
     // ビューに受け渡し用にmodelにセット
-    model.addAttribute("items", itemList);
+    model.addAttribute("foods", foodList);
     model.addAttribute("listForm", listForm);
 
 
     //画面入力値にエラーがない場合
     if (!result.hasErrors()) {
-      if (itemList != null) {
+      if (foodList != null) {
         //画面入力値1行ずつ処理をする
-        for (Item item : itemList) {
+        for (Food food : foodList) {
 
           //1行分の値でデータベースをUPDATEする
           //item_idをキーに名称と価格を更新する
           //SQL文字列中の「?」の部分に、後ろで指定した変数が埋め込まれる
           int updateCount = jdbcTemplate.update(
               "UPDATE items SET item_name = ?, price = ? WHERE item_id = ?",
-              item.getItemName(),
-              Integer.parseInt(item.getPrice()),
-              Integer.parseInt(item.getItemId()));
+              food.getItemName(),
+              Integer.parseInt(food.getPrice()),
+              Integer.parseInt(food.getItemId()));
         }
       }
     }
@@ -108,7 +108,7 @@ public class FoodService {
    * @param model
    * @return
    */
-  public Model update(String itemId, Model model) {
+  public Model delete(String itemId, Model model) {
 
 
     // 本来はここで入力チェックなど
@@ -124,7 +124,7 @@ public class FoodService {
 
   }
 
-  public Model insert(Item form,
+  public Model insert(Food form,
                         BindingResult result,
                         Model model) {
 

@@ -2,7 +2,7 @@ package jp.co.systena.tigerscase.model.service;
 
 import javax.validation.constraints.Pattern;
 
-public class Item {
+public class Food {
 
   @Pattern(regexp="^[0-9]*$")
   private String itemId;

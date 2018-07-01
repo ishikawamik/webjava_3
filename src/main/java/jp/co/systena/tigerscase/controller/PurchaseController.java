@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import jp.co.systena.tigerscase.model.form.CartForm;
+import jp.co.systena.tigerscase.model.form.PurchaseForm;
 import jp.co.systena.tigerscase.model.service.Cart;
 import jp.co.systena.tigerscase.model.service.Purchase;
 
@@ -28,12 +28,12 @@ public class PurchaseController extends BaseController {
     List<Purchase> list = cart.getPurchaseList();
     mav.addObject("list", list);
 
-    mav.addObject("cartForm", new CartForm());
+    mav.addObject("purchaseForm", new PurchaseForm());
     return mav;
   }
 
   @RequestMapping(value = "/purchase", method = RequestMethod.POST)
-  private ModelAndView remove(@Valid CartForm cartForm) {
+  private ModelAndView remove(@Valid PurchaseForm purchaseForm) {
 
     //履歴を削除
     Cart cart = getCartFromSession();

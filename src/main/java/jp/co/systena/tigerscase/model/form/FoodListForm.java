@@ -2,18 +2,18 @@ package jp.co.systena.tigerscase.model.form;
 
 import java.util.List;
 import javax.validation.Valid;
-import jp.co.systena.tigerscase.model.service.Item;
+import jp.co.systena.tigerscase.model.service.Food;
 
-public class ItemListForm {
+public class FoodListForm {
 
   @Valid
-  private List<Item> itemList;
+  private List<Food> foodList;
 
-  public List<Item> getItemList() {
-    return itemList;
+  public List<Food> getFoodList() {
+    return foodList;
   }
 
-  public void setItemList(List<Item> itemList) {
-    this.itemList = itemList;
+  public void setFoodList(List<Food> foodList) {
+    this.foodList = foodList;
   }
 }

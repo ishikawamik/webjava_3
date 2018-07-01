@@ -14,10 +14,10 @@ import jp.co.systena.tigerscase.model.gusyo.Younger;
 import jp.co.systena.tigerscase.model.service.Cart;
 import jp.co.systena.tigerscase.model.service.FoodService;
 import jp.co.systena.tigerscase.model.service.Menu;
+import jp.co.systena.tigerscase.model.service.MenuService;
 import jp.co.systena.tigerscase.model.service.Purchase;
 import jp.co.systena.tigerscase.model.tyusho.Chef;
 import jp.co.systena.tigerscase.model.tyusho.Costomer;
-import jp.co.systena.tigerscase.model.tyusho.MyName;
 
 @Controller
 public class MenuController extends BaseController{
@@ -27,11 +27,17 @@ public class MenuController extends BaseController{
   private Cock cock = new Cock();
   private Itamae itamae = new Itamae();
 
+  private MenuService menuService;
+
   @Autowired
   private FoodService foodService;
 
   @RequestMapping(value = "/menu", method = RequestMethod.GET)
     public ModelAndView show(ModelAndView mav) {
+
+
+    mav.addObject("costomerList", menuService.getCostomer());
+    mav.addObject("chefList", menuService.getChef());
 
     //メニュー表に選択する項目名を設定
     mav.addObject("youngerName", talkName(younger));
@@ -39,7 +45,7 @@ public class MenuController extends BaseController{
     mav.addObject("cockName", talkName(cock));
     mav.addObject("itamaeName", talkName(itamae));
 
-    mav.addObject("items", foodService.getItemList());
+    mav.addObject("foods", foodService.getFoodList());
 
     //セッションから選択に合わせたメッセージを設定
     String message = getMessageFromSession();
@@ -82,9 +88,9 @@ public class MenuController extends BaseController{
 
     //選択した食材をメッセージに収納
     String foodDB = menuForm.getSelectedFoodDB();
-    String itemName = foodService.getSelectItemName(foodDB);
+    String foodName = foodService.getSelectFoodName(foodDB);
     int price = foodService.getSelectPrice(foodDB);
-    orderMessage.append(itemName);
+    orderMessage.append(foodName);
     orderMessage.append("の");
 
     //選択したシェフ
@@ -119,9 +125,13 @@ public class MenuController extends BaseController{
   }
 
 
-  //名前を返す
-  public String talkName(MyName name) {
-    return name.introduce();
+  //お客の名前を返す
+  public String talkName(Costomer co) {
+    return co.introduce();
+  }
+  //シェフの名前を返す
+  public String talkName(Chef ch) {
+    return ch.introduce();
   }
 
   //お客の速さを返す
@@ -133,4 +143,5 @@ public class MenuController extends BaseController{
   public String talkCooking(Chef ch) {
     return ch.cook();
   }
+
 }
